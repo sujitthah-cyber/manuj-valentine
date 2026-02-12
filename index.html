@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Manuj, Be My Valentine 💖</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    text-align: center;
+    background: #ffe6f0;
+    overflow: hidden;
+}
+
+.container {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+h1 {
+    font-size: 2em;
+}
+
+.countdown {
+    margin-top: 10px;
+    font-size: 1rem;
+}
+
+img {
+    width: 220px;
+    margin: 20px 0;
+}
+
+.buttons {
+    position: relative;
+}
+
+button {
+    padding: 12px 25px;
+    font-size: 16px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    margin: 10px;
+    transition: 0.3s;
+}
+
+#yesBtn {
+    background: #ff4d88;
+    color: white;
+}
+
+#noBtn {
+    background: #999;
+    color: white;
+    position: absolute;
+}
+
+.hidden {
+    display: none;
+}
+
+#message {
+    margin-top: 20px;
+    font-size: 1.1rem;
+    opacity: 0;
+    transition: 2s;
+}
+
+.date-options {
+    margin-top: 20px;
+}
+
+.date-options button {
+    background: white;
+    border: 2px solid #ff4d88;
+    color: #ff4d88;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1 id="mainText"></h1>
+<div class="countdown" id="countdown"></div>
+
+<img id="mainGif" src="https://media.giphy.com/media/3oriO0OEd9QIDdllqo/giphy.gif">
+
+<div class="buttons">
+    <button id="yesBtn">Yes 💕</button>
+    <button id="noBtn">No 😢</button>
+</div>
+
+<div id="message"></div>
+
+<div id="dateSection" class="hidden">
+    <h2>So… what are we doing for Valentine’s? 😏</h2>
+    <div class="date-options">
+        <button>🍽 Romantic Dinner</button>
+        <button>🎬 Movie Night</button>
+        <button>🌊 Beach Date</button>
+        <button>🧺 Picnic</button>
+        <button>💖 Surprise Me</button>
+    </div>
+</div>
+
+</div>
+
+<script>
+
+// ===== NAME DYNAMIC =====
+const name = "Manuj";
+document.getElementById("mainText").innerText = `${name}, will you be my Valentine? 💖`;
+
+// ===== COUNTDOWN =====
+function updateCountdown() {
+    const now = new Date();
+    let year = now.getFullYear();
+    let valentines = new Date(year, 1, 14);
+
+    if (now > valentines) {
+        valentines = new Date(year + 1, 1, 14);
+    }
+
+    const diff = valentines - now;
+
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+    const minutes = Math.floor((diff / (1000 * 60)) % 60);
+    const seconds = Math.floor((diff / 1000) % 60);
+
+    document.getElementById("countdown").innerText =
+        `⏳ ${days}d ${hours}h ${minutes}m ${seconds}s until Valentine's Day`;
+}
+
+setInterval(updateCountdown, 1000);
+updateCountdown();
+
+// ===== NO BUTTON MOVES =====
+const noBtn = document.getElementById("noBtn");
+
+noBtn.addEventListener("mouseover", moveButton);
+noBtn.addEventListener("touchstart", moveButton);
+
+function moveButton() {
+    const x = Math.random() * (window.innerWidth - 100);
+    const y = Math.random() * (window.innerHeight - 50);
+
+    noBtn.style.left = x + "px";
+    noBtn.style.top = y + "px";
+}
+
+// ===== YES BUTTON =====
+document.getElementById("yesBtn").addEventListener("click", function() {
+
+    document.body.style.background = "linear-gradient(135deg, #ff99cc, #ff4d88)";
+    
+    document.getElementById("mainText").innerText = "YAYYYYY MANUJJJ 💘";
+    
+    document.getElementById("mainGif").src =
+        "https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif";
+
+    launchFireworks();
+
+    setTimeout(() => {
+        const msg = document.getElementById("message");
+        msg.innerText = "Thank you so much for being there for me in all situations baby, I love you my everything 💖";
+        msg.style.opacity = "1";
+    }, 2000);
+
+    setTimeout(() => {
+        document.getElementById("dateSection").classList.remove("hidden");
+    }, 4000);
+});
+
+// ===== SIMPLE FIREWORKS =====
+function launchFireworks() {
+    for (let i = 0; i < 30; i++) {
+        const spark = document.createElement("div");
+        spark.style.position = "absolute";
+        spark.style.width = "6px";
+        spark.style.height = "6px";
+        spark.style.background = "white";
+        spark.style.borderRadius = "50%";
+        spark.style.left = (window.innerWidth / 2) + "px";
+        spark.style.top = (window.innerHeight / 2) + "px";
+        spark.style.transition = "1s";
+        document.body.appendChild(spark);
+
+        setTimeout(() => {
+            spark.style.left = Math.random() * window.innerWidth + "px";
+            spark.style.top = Math.random() * window.innerHeight + "px";
+            spark.style.opacity = "0";
+        }, 10);
+
+        setTimeout(() => {
+            spark.remove();
+        }, 1000);
+    }
+}
+
+</script>
+
+</body>
+</html>
