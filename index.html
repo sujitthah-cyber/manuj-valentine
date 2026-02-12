@@ -178,6 +178,9 @@ document.getElementById("yesBtn").addEventListener("click", function() {
     document.getElementById("mainGif").src =
         "https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif";
 
+    // ✅ Hide the No button so it doesn't block clicks
+    noBtn.style.display = "none";
+
     launchFireworks();
 
     setTimeout(() => {
@@ -201,27 +204,25 @@ setTimeout(() => {
     dateButtons.forEach(button => {
         button.addEventListener("click", function() {
 
+            // Reset all buttons
             dateButtons.forEach(btn => {
                 btn.style.background = "white";
                 btn.style.color = "#ff4d88";
             });
 
+            // Highlight selected
             this.style.background = "#ff4d88";
             this.style.color = "white";
 
-            const dateSection =
-                document.getElementById("dateSection");
-
-            const oldMsg =
-                dateSection.querySelector(".confirm");
+            // Remove old confirmation if exists
+            const dateSection = document.getElementById("dateSection");
+            const oldMsg = dateSection.querySelector(".confirm");
             if (oldMsg) oldMsg.remove();
 
-            const confirmMsg =
-                document.createElement("div");
+            // Show confirmation message
+            const confirmMsg = document.createElement("div");
             confirmMsg.classList.add("confirm");
-            confirmMsg.innerText =
-                "It’s a date then 😘";
-
+            confirmMsg.innerText = "It’s a date then 😘";
             dateSection.appendChild(confirmMsg);
 
             launchFireworks();
